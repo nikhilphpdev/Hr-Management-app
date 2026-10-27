@@ -18,4 +18,8 @@ class Department extends Model
     { 
        return $this->HashMany(Position::class);
     }
+     public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
 }
