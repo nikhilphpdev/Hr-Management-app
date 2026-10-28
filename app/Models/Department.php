@@ -16,7 +16,7 @@ class Department extends Model
  
     public function positions(): HasMany
     { 
-       return $this->HashMany(Position::class);
+       return $this->HasMany(Position::class);
     }
      public function employees(): HasMany
     {

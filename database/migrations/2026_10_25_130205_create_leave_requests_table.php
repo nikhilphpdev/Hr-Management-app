@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
            // $table->enum('status', ['pending', 'approved', 'rejected']) ->default('pending');
             $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('reviewwd_at')->nullable();
+            $table->timestamp('reviewed_at')->nullable();
             $table->text('reviewed_note')->nullable();
             $table->timestamps();
         });

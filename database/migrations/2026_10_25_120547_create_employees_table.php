@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('position_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('manager_id')->nullable()->constrained('employees')->nullOnDelete();
             $table->date('hire_date');
-            $table->string('employee_status')->default('active');
+            $table->string('employment_status')->default('active');
             $table->decimal('salary',12,2)->default(0);
             $table->string('avatar_path')->nullable();
             $table->text('address')->nullable();

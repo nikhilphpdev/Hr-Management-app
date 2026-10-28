@@ -36,6 +36,9 @@ export default defineConfig({
                 '**/.cursor/**',
                 '**/.junie/**',
                 '**/vendor/**',
+                '**/bootstrap/cache/**',
+                '**/storage/**',
+
             ],
         },
     },
