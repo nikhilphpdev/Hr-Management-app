@@ -1,4 +1,6 @@
-    export interface PaginationLink {
+export type Role = 'admin' | 'hr' | 'manager' | 'employee';
+
+export interface PaginationLink {
             url: string | null;
             lebal:string;
             active:boolean;
