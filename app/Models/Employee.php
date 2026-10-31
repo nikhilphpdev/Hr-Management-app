@@ -42,7 +42,9 @@ class Employee extends Model
 
     protected function fullName(): Attribute
     {
+      
         return Attribute::get(fn(): string => "{$this->first_name} {$this->last_name}");
+        
     }
 
     /**
@@ -53,6 +55,7 @@ class Employee extends Model
     protected function avatarUrl(): Attribute
     {
         return Attribute::get(fn(): ?string => $this->avatar_path ? Storage::url($this->avatar_path) : null);
+        
     }
 
     public function user(): BelongsTo
