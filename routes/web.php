@@ -5,6 +5,9 @@ use \App\Http\Controllers\DepartmentController;
 use \App\Http\Controllers\PositionController;
 use \App\Http\Controllers\EmployeeController;
 use \App\Http\Controllers\LeaveRequestController;
+use \App\Http\Controllers\LeaveTypeController;
+use \App\Http\Controllers\AttendanceController;
+use \App\Http\Controllers\PayslipController;
 
 Route::inertia('/', 'welcome')->name('home');
 
@@ -48,6 +51,32 @@ Route::middleware('role:admin,hr')->group(function () {
         Route::patch('leave-requests/{leaveRequest}/reject', [LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
     });
 
+
+    // Leave types are configured by HR & admins.
+    Route::middleware('role:admin,hr')->group(function () {
+        Route::get('leave-types', [LeaveTypeController::class, 'index'])->name('leave-types.index');
+        Route::post('leave-types', [LeaveTypeController::class, 'store'])->name('leave-types.store');
+        Route::patch('leave-types/{leaveType}', [LeaveTypeController::class, 'update'])->name('leave-types.update');
+        Route::delete('leave-types/{leaveType}', [LeaveTypeController::class, 'destroy'])->name('leave-types.destroy');
+    });
+
+// ── Attendance ──────────────────────────────────────────────────────────
+    // Anyone can clock in/out for themselves…
+    Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance.clock-in');
+    Route::post('attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clock-out');
+
+    // …HR, admins and managers see the company-wide timesheet.
+    Route::middleware('role:admin,hr,manager')->group(function () {
+        Route::get('timesheets', [AttendanceController::class, 'timesheets'])->name('timesheets.index');
+    });
+
+    // ── Payroll (HR & admins) ───────────────────────────────────────────────
+    Route::middleware('role:admin,hr')->group(function () {
+        Route::get('payslips', [PayslipController::class, 'index'])->name('payslips.index');
+        Route::post('payslips', [PayslipController::class, 'store'])->name('payslips.store');
+        Route::get('payslips/{payslip}', [PayslipController::class, 'show'])->name('payslips.show');
+    });
 
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 });
